@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+
+<meta name="referrer" content="origin-when-cross-origin">
+
+<!-- REQUIRED: JAVASCRIPT INCLUDE -->
+<script>
+       var syfWidgetObject={};
+       syfWidgetObject.syfPartnerId = "PI10000539";
+       syfWidgetObject.flowType = "PDP";
+</script>
+
+<script id=”syfMPPScript” type="text/javascript" src = "https://spdpone.syfpos.com/mpp/UniFi.js"></script>
+
+<body>
+
+<H1>Revolving Staging Env - Digital Buy Combined Modal Call (Modal 3)</H1>
+
+<!-- The marketing promotion widget ("Synchrony PDP Widget") will look for a single number inside the id="product-content" div on the page. -->
+<div style="display: inline-flex;">Price : <span class="product__ctas--price">$</span> <div id="product-content">2500</div>
+</div><br><br>
+
+
+<!-- PDP widget will appear on the page in the class="sync-price" div. -->
+<div class="sync-price"> </div>
+
+<br>
+<br>
+<form name="dbuyform1" id="dbuyform1">
+	<H4>REQUIRED FIELDS</H4>
+	<!-- REQUIRED FIELDS -->
+	<div><label>Token to use (Use API to copy/paste a new token for each attempt):</label><input id="tokenId" name="tokenId" /></div>
+	<div><label>MerchantID (LEAVE EMPTY): </label><input id="merchantID" name="merchantID" value="" /></div>
+	<div><label>Client Transaction ID: </label><input id="clientTransId" name="clientTransId" value="HYN123" /></div>
+		<!-- Process Indicator 
+			"1"= Modal 1, Customer Account Information Modal
+			"2"= Modal 2, Order Completion Modal
+			"3"= Modal 3, Combined Modal -->
+		<div><label>Process Indicator: </label><input id="processInd" name="processInd" value="3" /></div>
+	<div><label>Partner ID: </label><input id="syfPartnerId" name="syfPartnerId" value="PI10000539" /></div>
+	<div><label>Address1: </label><input id="custAddress1" name="custAddress1" value="332 MINNESOTA ST"/></div>
+	<div><label>Address2: </label><input id="custAddress2" name="custAddress2" value=""/></div>
+	<div><label>City: </label><input id="custCity" name="custCity" value="SAINT PAUL" /></div>
+	<div><label>State: </label><input id="custState" name="custState" value="MN" /></div>	
+	<div><label>ZIP Code: </label><input id="custZipCode" name="custZipCode" value="55101" /></div>
+	
+	<div><label>Transaction Amount: </label><input id="transAmount1" name="transAmount1" value="1000.50" /></div>	
+	<div><label>Promotional Code (LEAVE EMPTY): </label><input id="transPromo1" name="transPromo1" value="" /></div> -->
+
+	<H4>OPTIONAL FIELDS</H4>
+	<!-- OPTIONAL FIELDS -->
+	<div><label>First Name: </label><input id="custFirstName" name="custFirstName" value="Johan"/></div>
+	<div><label>Last Name: </label><input id="custLastName" name="custLastName" value="Viera"/></div>
+	
+	<div><label>Card Acct No: </label><input id="cardNumber" name="cardNumber" value="6019194001801007" /></div>
+	<div><label>Card Expiration Month: </label><input id="expMonth" name="expMonth" value="" /></div>	
+	<div><label>Card Expiration Year: </label><input id="expYear" name="expYear" value="" /></div>		
+
+	<div><label>Initial Purchase Amount: </label><input id="iniPurAmt" name="iniPurAmt" value="600.50"/></div>
+	
+	<div><label>Phone Number: </label><input id="phoneNumber" name="phoneNumber" value="513-491-0359"/></div>
+	<div><label>Email Address: </label><input id="emailAddress" name="emailAddress" value="test@test.com"/></div>
+
+</form>
+
+
+<script type="text/javascript">
+window.addEventListener("message",function(event) {
+		if ((typeof event.data == 'string' || typeof event.data == 'object') && (event.data == 'Unifi Modal Close')) {
+              console.log('SYNCHRONY MODAL CLOSED', event);
+		}
+});
+</script>
+
+<script type="text/javascript">
+
+function changePrc()
+
+{
+	var numtiles = Number(document.getElementById("numberoftiles").value)
+	var priceper = Number(document.getElementById("pricepertile").value)
+	priceper *= numtiles
+	document.getElementById("product-content").innerHTML = priceper
+}
+
+
+function fJSON()
+
+{
+
+    let JSONObject = {};
+
+
+	<!-- REQUIRED FIELDS -->
+    JSONObject.tokenId = document.getElementById("tokenId").value;
+    JSONObject.syfPartnerId = document.getElementById("syfPartnerId").value;
+	JSONObject.merchantID = document.getElementById("merchantID").value;
+    JSONObject.processInd = document.getElementById("processInd").value;
+	JSONObject.clientTransId = document.getElementById("clientTransId").value;
+
+    JSONObject.custAddress1 = document.getElementById("custAddress1").value;
+    JSONObject.custAddress2 = document.getElementById("custAddress2").value;
+    JSONObject.custCity = document.getElementById("custCity").value;
+    JSONObject.custState = document.getElementById("custState").value;
+    JSONObject.custZipCode = document.getElementById("custZipCode").value;
+	
+    JSONObject.transAmount1 = document.getElementById("transAmount1").value;
+	JSONObject.transPromo1 = document.getElementById("transPromo1").value;
+
+     <!-- OPTIONAL FIELDS -->
+	JSONObject.custFirstName = document.getElementById("custFirstName").value;
+    JSONObject.custLastName = document.getElementById("custLastName").value;
+
+    JSONObject.cardNumber = document.getElementById("cardNumber").value;
+	JSONObject.expMonth = document.getElementById("expMonth").value;
+	JSONObject.expYear = document.getElementById("expYear").value;
+	
+	JSONObject.iniPurAmt = document.getElementById("iniPurAmt").value;
+
+    JSONObject.phoneNumber = document.getElementById("phoneNumber").value;
+    JSONObject.emailAddress = document.getElementById("emailAddress").value;
+    return JSONObject;
+
+}
+</script>
+
+
+<BR>
+
+<button type="button" id="checkoutjson" 
+onclick="syfMPP.calldBuyProcess(null,fJSON())">Call Modal</button>
+
+<button type="button" id="checkoutjson" 
+onclick="syfMPP.calldBuyProcess(dbuyform1, null)">Call Modal(form)</button>
+
+<button type="button" id="checkoutjson" ></button>
+
+
+		
+</body>
+</html>
+
